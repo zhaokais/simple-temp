@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [{
+        "label": "ngts",
+        "command": "ng",
+        "args": [
+            "serve",
+            "--host",
+            "localhost",
+            "--port",
+            "4200"
+        ],
+        "type": "shell",
+
+    }]
+}
