@@ -31,6 +31,7 @@
               }
             ],
             "styles": [
+              "src/styles.less"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -128,6 +129,7 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js"
             ],
             "styles": [
+              "src/styles.less"
             ],
             "assets": [
               "src/assets",
