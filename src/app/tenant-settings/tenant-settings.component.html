@@ -1,0 +1,63 @@
+<div style="width: 100%;">
+  <ul nz-menu nzMode="horizontal">
+    <li nz-menu-item nzSelected (click)="setShow(true)">
+      个性化配置
+    </li>
+    <li nz-menu-item (click)="setShow(false)">
+      无车承运人报文头配置
+    </li>
+  </ul>
+</div>
+
+<div class="content-gx" [hidden]="!show">
+  <div class="item">
+    平台标题：
+    <input class="title-in" nz-input placeholder="平台标题" [(ngModel)]="title" />
+  </div>
+  <div class="item">
+    <div class="clearfix">
+      <div>
+        平台Logo：
+      </div>
+      <nz-upload
+        nzAction="https://jsonplaceholder.typicode.com/posts/"
+        nzListType="picture-card"
+        [(nzFileList)]="fileList"
+        [nzShowButton]="fileList.length < 3"
+        [nzShowUploadList]="showUploadList"
+        [nzPreview]="handlePreview"
+      >
+        <i nz-icon nzType="plus"></i>
+        <div class="ant-upload-text">Upload</div>
+      </nz-upload>
+      <nz-modal
+        [nzVisible]="previewVisible"
+        [nzContent]="modalContent"
+        [nzFooter]="null"
+        (nzOnCancel)="previewVisible = false"
+      >
+        <ng-template #modalContent>
+          <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+        </ng-template>
+      </nz-modal>
+    </div>
+  </div>
+  <div class="item">
+    <button nz-button nzType="primary">保存</button>
+  </div>
+</div>
+
+<div class="content-car" [hidden]="show">
+  <div class="item" *ngFor="let nocarset of noCarSettings">
+    <div class="key">
+      {{nocarset.key}}
+    </div>
+    <div class="value">
+      <input class="title-in" nz-input placeholder="平台标题" [(ngModel)]="nocarset.value" />
+    </div>
+  </div>
+
+  <div class="item">
+    <button nz-button nzType="primary">保存</button>
+  </div>
+</div>

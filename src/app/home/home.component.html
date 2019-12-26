@@ -1,0 +1,9 @@
+
+<div class="field-filter">
+  <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+    <input type="text" nz-input placeholder="input name" [(ngModel)]="filter.name"/>
+  </nz-input-group>
+  <ng-template #suffixButton>
+    <button nz-button nzType="primary" nzSize="large" nzSearch (click)="search()">Search</button>
+  </ng-template>
+</div>

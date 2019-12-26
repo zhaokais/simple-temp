@@ -13,6 +13,14 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 
 import {
@@ -50,7 +58,7 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule,
+    MatTreeModule
 } from '@angular/material';
 @NgModule({
     imports: [
@@ -92,6 +100,14 @@ import {
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
+        NgZorroAntdModule,
+        NzInputModule,
+        NzUploadModule,
+        NzTableModule,
+        NzTreeSelectModule,
+        NzDatePickerModule,
+        NzBreadCrumbModule,
+        NzInputNumberModule
     ],
     declarations: [
         LocalizePipe,
@@ -137,6 +153,14 @@ import {
         MatTooltipModule,
         MatTreeModule,
         ScrollingModule,
+        NgZorroAntdModule,
+        NzInputModule,
+        NzUploadModule,
+        NzTableModule,
+        NzTreeSelectModule,
+        NzDatePickerModule,
+        NzBreadCrumbModule,
+        NzInputNumberModule
     ]
 })
 export class SharedModule {

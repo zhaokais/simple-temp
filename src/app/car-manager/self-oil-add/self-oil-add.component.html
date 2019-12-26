@@ -1,0 +1,228 @@
+<div class="search">
+  <div class="item">
+    <div class="tip">
+      业务单位:
+    </div>
+    <nz-tree-select
+      style="width: 180px"
+      [nzNodes]="nodes"
+      nzShowSearch
+      nzPlaceHolder="Please select"
+      [(ngModel)]="unit"
+      (ngModelChange)="searchUnit($event)"
+    >
+    </nz-tree-select>
+  </div>
+  <div class="item">
+    <div class="tip">
+      加油时间:
+    </div>
+    <nz-range-picker [(ngModel)]="date" (ngModelChange)="searchDate($event)"></nz-range-picker>
+  </div>
+  <div class="submit">
+    <button class="bt" nz-button>查询</button>
+    <button class="bt" nz-button>重置</button>
+  <button class="bt" nz-button (click)="showMore()">{{getTitle()}}</button>
+  </div>
+</div>
+<div class="search" [hidden]='!more'>
+  <div class="item">
+    <div class="tip">
+      车辆编号:
+    </div>
+    <input style="width: 180px" nz-input placeholder="车辆编号" [(ngModel)]="carNumber" />
+  </div>
+  <div class="item">
+    <div class="tip">
+      司机姓名:
+    </div>
+    <input style="width: 180px" nz-input placeholder="司机姓名" [(ngModel)]="carNumber" />
+  </div>
+  <div class="item">
+    <div class="tip">
+      审核状态:
+    </div>
+    <nz-select style="width: 180px" [(ngModel)]="state" nzAllowClear nzPlaceHolder="Choose">
+      <nz-option nzValue="未审核" nzLabel="未审核"></nz-option>
+      <nz-option nzValue="审核通过" nzLabel="审核通过"></nz-option>
+      <nz-option nzValue="审核退回" nzLabel="审核退回"></nz-option>
+      <nz-option nzValue="其他" nzLabel="其他"></nz-option>
+    </nz-select>
+  </div>
+</div>
+<app-toolbar (onemit)="tool($event)"></app-toolbar>
+<nz-table #columnTable [nzData]="listOfData" [nzScroll]="{ x: '2310px' }">
+  <thead>
+    <tr>
+      <th nzWidth="60px" nzLeft="0px" nzShowCheckbox (nzCheckedChange)="checkAll()"></th>
+      <th nzWidth="100px" nzLeft="60px">业务单位</th>
+      <th nzWidth="100px" nzLeft="155px">加油时间</th>
+      <th nzWidth="100px" nzLeft="260px">记账日期</th>
+      <th nzWidth="100px" nzLeft="360px">加油升数</th>
+      <th nzWidth="100px" nzLeft="460px">油品</th>
+      <th nzWidth="100px">审核状态</th>
+      <th nzWidth="100px">是否已上传附件</th>
+      <th nzWidth="100px">数据类型</th>
+      <th nzWidth="100px">加油站</th>
+      <th nzWidth="100px">加油车辆编号</th>
+      <th nzWidth="100px">司机姓名</th>
+      <th nzWidth="100px">司机身份证号</th>
+      <th nzWidth="100px">加油支数</th>
+      <th nzWidth="100px">加油单价</th>
+      <th nzWidth="100px">是否含税价</th>
+      <th nzWidth="100px">税率</th>
+      <th nzWidth="100px">含税金额</th>
+      <th nzWidth="100px">不含税金额</th>
+      <th nzWidth="100px">加油操作人</th>
+      <th nzWidth="100px">审核说明</th>
+      <th nzWidth="100px">审核操作人</th>
+      <th nzWidth="100px">单车付款方式</th>
+      <th nzWidth="100px">备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of columnTable.data">
+      <td nzWidth="60px" nzLeft="0px" nzShowCheckbox [(nzChecked)]="data.isSelected" [nzDisabled]="data.shzt=='102-审核通过'"></td>
+      <td nzWidth="100px" nzLeft="60px">{{ data.ywdw }}</td>
+      <td nzWidth="100px" nzLeft="155px">{{ data.jysj }}</td>
+      <td nzWidth="100px" nzLeft="260px">{{ data.jzrq }}</td>
+      <td nzWidth="100px" nzLeft="360px">{{ data.jyss }}</td>
+      <td nzWidth="100px" nzLeft="460px">{{ data.yp }}</td>
+      <td nzWidth="100px">{{ data.shzt }}</td>
+      <td nzWidth="100px">{{ data.sfyscfj }}</td>
+      <td nzWidth="100px">{{ data.sjlx }}</td>
+      <td nzWidth="100px">{{ data.jyz }}</td>
+      <td nzWidth="100px">{{ data.jyclbh }}</td>
+      <td nzWidth="100px">{{ data.sjxm }}</td>
+      <td nzWidth="100px">{{ data.sjsfzh }}</td>
+      <td nzWidth="100px">{{ data.jyzs }}</td>
+      <td nzWidth="100px">{{ data.jydj }}</td>
+      <td nzWidth="100px">{{ data.sfhsj }}</td>
+      <td nzWidth="100px">{{ data.sl }}</td>
+      <td nzWidth="100px">{{ data.hsje }}</td>
+      <td nzWidth="100px">{{ data.bhsje }}</td>
+      <td nzWidth="100px">{{ data.jyczr }}</td>
+      <td nzWidth="100px">{{ data.shsm }}</td>
+      <td nzWidth="100px">{{ data.shczr }}</td>
+      <td nzWidth="100px">{{ data.dcfkfs }}</td>
+      <td nzWidth="100px">{{ data.bz }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal [nzWidth]="720" [(nzVisible)]="addDialog" nzTitle="添加" (nzOnCancel)="cancel()" (nzOnOk)="add()">
+  <form  nz-form [formGroup]="validateForm" (ngSubmit)="add()">
+    <div class="form-row">
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>业务单位</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-tree-select
+            [nzNodes]="nodes"
+            nzShowSearch
+            nzPlaceHolder="Please select"
+            formControlName="ywdw"
+            id="ywdw"
+          >
+        </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>记账日期</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-date-picker formControlName="jzrq" id="jzqi"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-row">
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>加油时间</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-date-picker formControlName="jysj" id="jysj"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>加油支数</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-input-number formControlName="jyzs" id="jyzs"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-row">
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>加油升数</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-input-number formControlName="jyss" id="jyss"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>加油单价</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-input-number formControlName="jydj" id="jydj"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-row">
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24">含税金额</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-input-number formControlName="hsje" id="hsje"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>不含税金额</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-input-number formControlName="bhsje" id="bhsje"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-row">
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>加油车辆编号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <input nz-input formControlName="jyclbh" id="jyclbh" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>司机姓名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <input nz-input formControlName="sjxm" id="sjxm" [disabled]="form_driver" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-row">
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>司机身份证号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <input nz-input formControlName="sjsfzh" id="sjsfzh" [disabled]="form_number" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>加油站</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <nz-tree-select
+            [nzNodes]="nodes"
+            nzShowSearch
+            nzPlaceHolder="Please select"
+            formControlName="jyz"
+            id="jyz"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+  </form>
+</nz-modal>
+

@@ -1,1 +1,53 @@
-<h1>home</h1>
+<mat-sidenav-container style="height: 100Vh; width: 100%;">
+    <mat-sidenav #sidenav mode="over" opened>
+            <ul nz-menu nzMode="inline">
+              <li nz-submenu nzTitle="系统管理" nzIcon="control" nzOpen>
+                <ul>
+                  <li nz-menu-group nzTitle="运维管理">
+                    <ul>
+                      <li nz-menu-item [routerLink]="['/app/tenant']">租户相关设置</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li nz-submenu nzTitle="车务管理" nzIcon="car">
+                <ul>
+                  <li nz-menu-item>自有油品入库</li>
+                  <li nz-menu-item [routerLink]="['/app/addoil']">自有油品加油</li>
+                  <li nz-menu-item>车辆外部加油</li>
+                  <li nz-menu-item>运输数据有效范围设置</li>
+                </ul>
+              </li>
+              <li nz-submenu nzTitle="车辆维修" nzIcon="car">
+                <ul>
+                  <li nz-menu-item>配件采购</li>
+                  <li nz-menu-item>配件入库</li>
+                  <li nz-menu-item>配件出库</li>
+                  <li nz-menu-item>配件库存</li>
+                  <li nz-menu-item>维修登记</li>
+                  <li nz-menu-item>轮胎更换</li>
+                </ul>
+              </li>
+              <li nz-submenu nzTitle="费用核算" nzIcon="account-book">
+                <ul>
+                  <li nz-menu-item>费用分摊</li>
+                  <li nz-menu-item>单车特殊费用</li>
+                  <li nz-menu-item>单车过路费</li>
+                  <li nz-menu-item>运输计量单维护</li>
+                  <li nz-menu-item>单车服务费用结算预览</li>
+                  <li nz-menu-item>单车服务费用结算</li>
+                  <li nz-menu-item>单车月结算预览</li>
+                  <li nz-menu-item>单车月结算</li>
+                </ul>
+              </li>
+            </ul>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <span [routerLink]="['/app/home']">TMS</span>
+            <button mat-button (click)="sidenav.toggle()">侧边栏</button>
+        </mat-toolbar>
+        
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
