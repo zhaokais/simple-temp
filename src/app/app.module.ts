@@ -22,6 +22,7 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
+import { SelfOilInComponent } from './car-manager/self-oil-in/self-oil-in.component';
 
 registerLocaleData(zh);
 
@@ -32,6 +33,7 @@ registerLocaleData(zh);
       CarComponent,
       TenantSettingsComponent,
       SelfOilAddComponent,
+      SelfOilInComponent,
       ToolbarComponent
    ],
    imports: [

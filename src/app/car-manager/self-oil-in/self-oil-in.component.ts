@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TransferItem } from 'ng-zorro-antd';
 
 @Component({
-  selector: 'app-self-oil-add',
-  templateUrl: './self-oil-add.component.html',
-  styleUrls: ['./self-oil-add.component.less']
+  selector: 'app-self-oil-in',
+  templateUrl: './self-oil-in.component.html',
+  styleUrls: ['./self-oil-in.component.less']
 })
-export class SelfOilAddComponent implements OnInit {
+export class SelfOilInComponent implements OnInit {
 
   date = '';
   carNumber = '';
@@ -95,6 +92,7 @@ export class SelfOilAddComponent implements OnInit {
 
   listOfData = [
     {
+      id: 1,
       ywdw: '贺泰汽运',
       jysj: '2019-05-30T18:29:50',
       jzrq: '2019-05-30',
@@ -121,6 +119,7 @@ export class SelfOilAddComponent implements OnInit {
       isSelected: false
     },
     {
+      id: 2,
       ywdw: '贺泰汽运',
       jysj: '2019-05-30T18:29:50',
       jzrq: '2019-05-30',
@@ -147,6 +146,7 @@ export class SelfOilAddComponent implements OnInit {
       isSelected: false
     },
     {
+      id: 3,
       ywdw: '贺泰汽运',
       jysj: '2019-05-30T18:29:50',
       jzrq: '2019-05-30',
@@ -173,6 +173,7 @@ export class SelfOilAddComponent implements OnInit {
       isSelected: false
     },
     {
+      id: 4,
       ywdw: '贺泰汽运',
       jysj: '2019-05-30T18:29:50',
       jzrq: '2019-05-30',
@@ -199,6 +200,7 @@ export class SelfOilAddComponent implements OnInit {
       isSelected: false
     },
     {
+      id: 5,
       ywdw: '贺泰汽运',
       jysj: '2019-05-30T18:29:50',
       jzrq: '2019-05-30',
@@ -225,6 +227,7 @@ export class SelfOilAddComponent implements OnInit {
       isSelected: false
     },
     {
+      id: 6,
       ywdw: '贺泰汽运',
       jysj: '2019-05-30T18:29:50',
       jzrq: '2019-05-30',
@@ -252,56 +255,10 @@ export class SelfOilAddComponent implements OnInit {
     }
   ];
 
-  addDialog = false;
-  addOperatorDialog = false;
-  addOilDialog = false;
-  validateForm: FormGroup;
-
-  form_driver = true;
-  form_number = true;
-
-  list: TransferItem[] = [];
-
-  constructor(
-    private fb: FormBuilder
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.validateForm = this.fb.group({
-      ywdw: [null, [Validators.required]],
-      jysj: [null, [Validators.required]],
-      jzrq: ['2019-12-26', [Validators.required]],
-      jyss: [null, [Validators.required]],
-      yp: [null, [Validators.required]],
-      shzt: [null, [Validators.required]],
-      sfyscfj: [null, [Validators.required]],
-      sjlx: [null, [Validators.required]],
-      jyz: [null, [Validators.required]],
-      jyclbh: [null, [Validators.required]],
-      sjxm: [null, [Validators.required]],
-      sjsfzh: [null, [Validators.required]],
-      jyzs: [1, [Validators.required]],
-      jydj: [null, [Validators.required]],
-      sfhsj: [null, [Validators.required]],
-      sl: [null, [Validators.required]],
-      hsje: [null],
-      bhsje: [null, [Validators.required]],
-      jyczr: [null, [Validators.required]],
-      shsm: [null, [Validators.required]],
-      shczr: [null, [Validators.required]],
-      dcfkfs: [null, [Validators.required]],
-      bz: [null, [Validators.required]]
-    });
-
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        disabled: i % 3 < 1
-      });
-    }
   }
-
   searchUnit(item) {
     alert(item);
   }
@@ -317,48 +274,29 @@ export class SelfOilAddComponent implements OnInit {
     return this.more ? '收起' : '更多';
   }
 
-  checkAll() {
-    this.listOfData.filter(item => item.shzt !== '102-审核通过').forEach(item => {
-      item.isSelected = true;
-    });
-  }
 
   tool(event) {
     if (event === 'add') {
-      this.addDialog = true;
     }
   }
   add() {
-    this.addDialog = false;
   }
   cancel() {
-    this.addDialog = false;
-  }
-  addOperator() {
-    this.addOperatorDialog = false;
-  }
-  cancelOperator() {
-    this.addOperatorDialog = false;
-  }
-  addOil() {
-    this.addOilDialog = false;
-  }
-  cancelOil() {
-    this.addOilDialog = false;
   }
 
-  getOperator() {
-    this.addOperatorDialog = true;
+  editItem(item) {
+    item.isSelected = !item.isSelected;
   }
-  getOil() {
-    this.addOilDialog = true;
-  }
-
-  select(ret: {}): void {
-    console.log('nzSelectChange', ret);
-  }
-
-  change(ret: {}): void {
-    console.log('nzChange', ret);
+  focusNextInput(event, data) {
+    if (event.keyCode === 13) {
+      this.listOfData[this.listOfData.indexOf(data)].isSelected = !this.listOfData[this.listOfData.indexOf(data)].isSelected;
+      if (this.listOfData.indexOf(data) + 1 <= this.listOfData.length) {
+        this.listOfData[this.listOfData.indexOf(data) + 1].isSelected = !this.listOfData[this.listOfData.indexOf(data)].isSelected;
+      }
+      setTimeout(() => {
+        const input = document.getElementById(this.listOfData[this.listOfData.indexOf(data) + 1].id + '');
+        input.focus();
+      }, 10);
+    }
   }
 }

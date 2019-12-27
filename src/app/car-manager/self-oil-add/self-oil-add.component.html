@@ -110,7 +110,7 @@
   </tbody>
 </nz-table>
 
-<nz-modal [nzWidth]="720" [(nzVisible)]="addDialog" nzTitle="添加" (nzOnCancel)="cancel()" (nzOnOk)="add()">
+<nz-modal [nzWidth]="720" [(nzVisible)]="addDialog" nzTitle="添加" (nzOnCancel)="cancel()" (nzOnOk)="add()" nzMaskClosable=false nzClosable=false>
   <form  nz-form [formGroup]="validateForm" (ngSubmit)="add()">
     <div class="form-row">
       <nz-form-item class="item">
@@ -222,7 +222,129 @@
       </nz-form-item>
     </div>
 
+    <div class="form-row">
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>加油操作人</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <input nz-input formControlName="jyczr" id="jyczr" (click)="getOperator()"/>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>油品</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必填字段">
+          <input nz-input formControlName="yp" id="yp" (click)="getOil()"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
 
   </form>
+</nz-modal>
+
+<nz-modal  [nzWidth]="670" [(nzVisible)]="addOperatorDialog" nzTitle="添加加油操作人" (nzOnCancel)="cancelOperator()" (nzOnOk)="addOperator()"  nzMaskClosable=false nzClosable=false>
+  <mat-sidenav-container style="width: 100%;">
+    <mat-sidenav style="padding: 10px;" #unitnav mode="side" >
+      <nz-tree
+        #nzTreeComponent
+        [nzData]="nodes"
+        nzCheckable
+      >
+      </nz-tree>
+    </mat-sidenav>
+    <mat-sidenav-content style="background-color: #FFFFFF;">
+      <mat-toolbar (click)="unitnav.toggle()">
+          组织机构
+      </mat-toolbar>
+      <div style=" display: flex; justify-content: center;align-items: center;">
+        <nz-transfer
+          [nzDataSource]="list"
+          [nzTitles]="['Source', 'Target']"
+          nzShowSearch
+          (nzSelectChange)="select($event)"
+          (nzChange)="change($event)"
+        >
+        </nz-transfer>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</nz-modal>
+
+<nz-modal  [nzWidth]="1024" [(nzVisible)]="addOilDialog" nzTitle="添加油品" (nzOnCancel)="cancelOil()" (nzOnOk)="addOil()"  nzMaskClosable=false nzClosable=false>
+  <mat-sidenav-container style="width: 100%;">
+    <mat-sidenav style="padding: 10px;" #materialnav mode="side" >
+      <nz-tree
+        #nzTreeComponent
+        [nzData]="nodes"
+        nzCheckable
+      >
+      </nz-tree>
+    </mat-sidenav>
+    <mat-sidenav-content style="background-color: #FFFFFF;">
+      <mat-toolbar (click)="materialnav.toggle()">
+          物料选择
+      </mat-toolbar>
+      <div style=" display: flex; justify-content: center;align-items: center;">
+        <nz-table style="width: 924px;" #columnTable [nzData]="listOfData" [nzScroll]="{ x: '2310px' }">
+          <thead>
+            <tr>
+              <th nzWidth="60px" nzLeft="0px" nzShowCheckbox (nzCheckedChange)="checkAll()"></th>
+              <th nzWidth="100px" nzLeft="60px">业务单位</th>
+              <th nzWidth="100px" nzLeft="155px">加油时间</th>
+              <th nzWidth="100px" nzLeft="260px">记账日期</th>
+              <th nzWidth="100px" nzLeft="360px">加油升数</th>
+              <th nzWidth="100px" nzLeft="460px">油品</th>
+              <th nzWidth="100px">审核状态</th>
+              <th nzWidth="100px">是否已上传附件</th>
+              <th nzWidth="100px">数据类型</th>
+              <th nzWidth="100px">加油站</th>
+              <th nzWidth="100px">加油车辆编号</th>
+              <th nzWidth="100px">司机姓名</th>
+              <th nzWidth="100px">司机身份证号</th>
+              <th nzWidth="100px">加油支数</th>
+              <th nzWidth="100px">加油单价</th>
+              <th nzWidth="100px">是否含税价</th>
+              <th nzWidth="100px">税率</th>
+              <th nzWidth="100px">含税金额</th>
+              <th nzWidth="100px">不含税金额</th>
+              <th nzWidth="100px">加油操作人</th>
+              <th nzWidth="100px">审核说明</th>
+              <th nzWidth="100px">审核操作人</th>
+              <th nzWidth="100px">单车付款方式</th>
+              <th nzWidth="100px">备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of columnTable.data">
+              <td nzWidth="60px" nzLeft="0px" nzShowCheckbox [(nzChecked)]="data.isSelected" [nzDisabled]="data.shzt=='102-审核通过'"></td>
+              <td nzWidth="100px" nzLeft="60px">{{ data.ywdw }}</td>
+              <td nzWidth="100px" nzLeft="155px">{{ data.jysj }}</td>
+              <td nzWidth="100px" nzLeft="260px">{{ data.jzrq }}</td>
+              <td nzWidth="100px" nzLeft="360px">{{ data.jyss }}</td>
+              <td nzWidth="100px" nzLeft="460px">{{ data.yp }}</td>
+              <td nzWidth="100px">{{ data.shzt }}</td>
+              <td nzWidth="100px">{{ data.sfyscfj }}</td>
+              <td nzWidth="100px">{{ data.sjlx }}</td>
+              <td nzWidth="100px">{{ data.jyz }}</td>
+              <td nzWidth="100px">{{ data.jyclbh }}</td>
+              <td nzWidth="100px">{{ data.sjxm }}</td>
+              <td nzWidth="100px">{{ data.sjsfzh }}</td>
+              <td nzWidth="100px">{{ data.jyzs }}</td>
+              <td nzWidth="100px">{{ data.jydj }}</td>
+              <td nzWidth="100px">{{ data.sfhsj }}</td>
+              <td nzWidth="100px">{{ data.sl }}</td>
+              <td nzWidth="100px">{{ data.hsje }}</td>
+              <td nzWidth="100px">{{ data.bhsje }}</td>
+              <td nzWidth="100px">{{ data.jyczr }}</td>
+              <td nzWidth="100px">{{ data.shsm }}</td>
+              <td nzWidth="100px">{{ data.shczr }}</td>
+              <td nzWidth="100px">{{ data.dcfkfs }}</td>
+              <td nzWidth="100px">{{ data.bz }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </nz-modal>
 

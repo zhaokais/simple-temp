@@ -1,0 +1,91 @@
+<div class="search">
+  <div class="item">
+    <div class="tip">
+      业务单位:
+    </div>
+    <nz-tree-select
+      style="width: 180px"
+      [nzNodes]="nodes"
+      nzShowSearch
+      nzPlaceHolder="Please select"
+      [(ngModel)]="unit"
+      (ngModelChange)="searchUnit($event)"
+    >
+    </nz-tree-select>
+  </div>
+  <div class="item">
+    <div class="tip">
+      加油时间:
+    </div>
+    <nz-range-picker [(ngModel)]="date" (ngModelChange)="searchDate($event)"></nz-range-picker>
+  </div>
+  <div class="submit">
+    <button class="bt" nz-button>查询</button>
+    <button class="bt" nz-button>重置</button>
+  <button class="bt" nz-button (click)="showMore()">{{getTitle()}}</button>
+  </div>
+</div>
+<div class="search" [hidden]='!more'>
+  <div class="item">
+    <div class="tip">
+      车辆编号:
+    </div>
+    <input style="width: 180px" nz-input placeholder="车辆编号" [(ngModel)]="carNumber" />
+  </div>
+  <div class="item">
+    <div class="tip">
+      司机姓名:
+    </div>
+    <input style="width: 180px" nz-input placeholder="司机姓名" [(ngModel)]="carNumber" />
+  </div>
+  <div class="item">
+    <div class="tip">
+      审核状态:
+    </div>
+    <nz-select style="width: 180px" [(ngModel)]="state" nzAllowClear nzPlaceHolder="Choose">
+      <nz-option nzValue="未审核" nzLabel="未审核"></nz-option>
+      <nz-option nzValue="审核通过" nzLabel="审核通过"></nz-option>
+      <nz-option nzValue="审核退回" nzLabel="审核退回"></nz-option>
+      <nz-option nzValue="其他" nzLabel="其他"></nz-option>
+    </nz-select>
+  </div>
+</div>
+<app-toolbar (onemit)="tool($event)"></app-toolbar>
+<nz-table #columnTable [nzData]="listOfData" [nzScroll]="{ x: '2310px' }">
+  <thead>
+    <tr>
+      <th></th>
+      <th>业务单位</th>
+      <th>加油时间</th>
+      <th>记账日期</th>
+      <th>加油升数</th>
+      <th>油品</th>
+      <th>审核状态</th>
+      <th>是否已上传附件</th>
+      <th>数据类型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of columnTable.data">
+      <td >
+        <a (click)="editItem(data)" *ngIf="!data.isSelected else edit">Edit</a>
+        <ng-template #edit>
+          <a (click)="editItem(data)">complete</a>
+        </ng-template>
+      </td>
+      <td>{{ data.ywdw }}</td>
+      <td>{{ data.jysj }}</td>
+      <td>{{ data.jzrq }}</td>
+      <td>
+      <input nz-input id="{{data.id}}" style="width: 100px" [(ngModel)]="data.jyss" *ngIf="data.isSelected else jyss" (keypress)="focusNextInput($event,data)" />
+        <ng-template #jyss>
+          {{ data.jyss }}
+        </ng-template>
+      </td>
+      <td>{{ data.yp }}</td>
+      <td>{{ data.shzt }}</td>
+      <td>{{ data.sfyscfj }}</td>
+      <td>{{ data.sjlx }}</td>
+    </tr>
+  </tbody>
+</nz-table>

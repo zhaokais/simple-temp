@@ -21,6 +21,7 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzTransferModule } from 'ng-zorro-antd/transfer';
 
 
 import {
@@ -107,7 +108,8 @@ import {
         NzTreeSelectModule,
         NzDatePickerModule,
         NzBreadCrumbModule,
-        NzInputNumberModule
+        NzInputNumberModule,
+        NzTransferModule
     ],
     declarations: [
         LocalizePipe,
@@ -160,7 +162,8 @@ import {
         NzTreeSelectModule,
         NzDatePickerModule,
         NzBreadCrumbModule,
-        NzInputNumberModule
+        NzInputNumberModule,
+        NzTransferModule
     ]
 })
 export class SharedModule {

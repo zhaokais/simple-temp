@@ -2,7 +2,7 @@
   <div *ngFor="let it of items" class="item">
     <nz-breadcrumb>
       <nz-breadcrumb-item>
-      <a (click)="emit(it.name)">
+        <a (click)="emit(it.name)">
           <i nz-icon nzType="{{it.icon}}" nzTheme="outline"></i>
           {{it.title}}
         </a>
