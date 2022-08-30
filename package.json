@@ -40,7 +40,7 @@
     "js-cookie": "^2.1.4",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "moment-timezone": "^0.5.13",
+    "moment-timezone": "^0.5.35",
     "push.js": "1.0.9",
     "raphael": "^2.2.7",
     "rxjs": "^6.2.0",
